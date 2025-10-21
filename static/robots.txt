@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /api-access
+Allow: /api-dashboard
+Allow: /login
+
+Disallow: /api/
+Disallow: /auth/
+Disallow: /generate-api-key
+Disallow: /api-key-info
+Disallow: /progress/
+Disallow: /download/
+Disallow: /profile
+
+Sitemap: /sitemap.xml

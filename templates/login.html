@@ -1,0 +1,387 @@
+{% extends "base.html" %}
+
+{% block title %}Login - YouTube Shorts Trimmer{% endblock %}
+{% block meta_title %}Login | Secure Access to Shots Trimmer{% endblock %}
+{% block meta_description %}Sign in with Google or GitHub to sync your Shorts Trimmer API keys, monitor usage, and manage your profile.{% endblock %}
+{% block og_description %}Authenticate with OAuth to unlock personalized dashboards and API key management inside Shorts Trimmer.{% endblock %}
+{% block twitter_description %}Connect with Google or GitHub to manage your Shorts Trimmer account and API keys.{% endblock %}
+
+{% block terminal_title %}User Authentication{% endblock %}
+
+{% block content %}
+<!-- Terminal Command Header -->
+<div class="terminal-command-header">
+    <div class="command-line">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">./authenticate-user.sh --oauth</span>
+    </div>
+    <div class="command-output">
+        <span class="output-success">[INFO]</span> OAuth Authentication System v2.0 initialized
+    </div>
+</div>
+
+<!-- Login Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./welcome-message.txt</span>
+    </div>
+    <div class="section-content">
+        <div class="hero-text">
+            <h1 class="terminal-title">
+                Welcome to <span class="text-cyan">Shots Trimmer</span>
+            </h1>
+            <p class="terminal-description">
+                Sign in to access your personal dashboard, API keys, and advanced features. 
+                Your account helps us provide better service and track your usage.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- OAuth Login Options -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">ls -la ./oauth-providers/</span>
+    </div>
+    <div class="section-content">
+        <div class="oauth-providers">
+            <!-- Google OAuth -->
+            <div class="oauth-provider">
+                <div class="provider-info">
+                    <div class="provider-icon">
+                        <i class="fab fa-google text-blue"></i>
+                    </div>
+                    <div class="provider-details">
+                        <h3 class="provider-name">google_oauth</h3>
+                        <p class="provider-description">
+                            Sign in with your Google account for quick and secure access
+                        </p>
+                    </div>
+                </div>
+                <a href="{{ url_for('auth_redirect', provider='google') }}" class="terminal-button terminal-button-primary">
+                    <i class="fab fa-google"></i> ./login-google.sh
+                </a>
+            </div>
+
+            <!-- GitHub OAuth -->
+            <div class="oauth-provider">
+                <div class="provider-info">
+                    <div class="provider-icon">
+                        <i class="fab fa-github text-purple"></i>
+                    </div>
+                    <div class="provider-details">
+                        <h3 class="provider-name">github_oauth</h3>
+                        <p class="provider-description">
+                            Sign in with your GitHub account - perfect for developers
+                        </p>
+                    </div>
+                </div>
+                <a href="{{ url_for('auth_redirect', provider='github') }}" class="terminal-button terminal-button-secondary">
+                    <i class="fab fa-github"></i> ./login-github.sh
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features for Logged in Users -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./member-benefits.md</span>
+    </div>
+    <div class="section-content">
+        <h3 class="terminal-subtitle">member_benefits</h3>
+        <div class="benefits-list">
+            <div class="benefit-item">
+                <i class="fas fa-key text-cyan"></i>
+                <div class="benefit-content">
+                    <h4 class="benefit-title">api_access</h4>
+                    <p class="benefit-description">
+                        Generate and manage API keys for automated video processing
+                    </p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-chart-line text-yellow"></i>
+                <div class="benefit-content">
+                    <h4 class="benefit-title">usage_tracking</h4>
+                    <p class="benefit-description">
+                        Monitor your conversion history and API usage statistics
+                    </p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-save text-blue"></i>
+                <div class="benefit-content">
+                    <h4 class="benefit-title">saved_preferences</h4>
+                    <p class="benefit-description">
+                        Save your favorite settings and conversion preferences
+                    </p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-robot text-purple"></i>
+                <div class="benefit-content">
+                    <h4 class="benefit-title">automation_tools</h4>
+                    <p class="benefit-description">
+                        Access advanced automation features and webhook integrations
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Access Requirement Notice -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">echo "Authentication required"</span>
+    </div>
+    <div class="section-content">
+        <div class="guest-access">
+            <h3 class="terminal-subtitle">access_policy_update</h3>
+            <p class="terminal-description">
+                Login is now required before you can start trimming videos. Sign in with Google or GitHub above to continue.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Security Notice -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./security-notice.txt</span>
+    </div>
+    <div class="section-content">
+        <div class="security-notice">
+            <h3 class="terminal-subtitle">security_policy</h3>
+            <div class="security-items">
+                <div class="security-item">
+                    <i class="fas fa-shield-alt text-cyan"></i>
+                    <span>We never store your OAuth passwords or sensitive credentials</span>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-lock text-cyan"></i>
+                    <span>All data transmission is encrypted using industry-standard SSL/TLS</span>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-user-shield text-cyan"></i>
+                    <span>We only access basic profile information (name, email) with your permission</span>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-trash text-cyan"></i>
+                    <span>You can delete your account and all associated data at any time</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add login page specific interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects to OAuth providers
+    const providers = document.querySelectorAll('.oauth-provider');
+    providers.forEach(provider => {
+        provider.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.transition = 'transform 0.2s ease';
+        });
+        
+        provider.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Add loading state to OAuth buttons
+    const oauthButtons = document.querySelectorAll('.oauth-provider .terminal-button');
+    oauthButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ./authenticating.sh';
+            this.disabled = true;
+            
+            // Reset after 10 seconds if something goes wrong
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 10000);
+        });
+    });
+});
+</script>
+
+<style>
+/* Login page specific styles */
+.oauth-providers {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.oauth-provider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--terminal-surface-light);
+    border: 1px solid var(--terminal-border);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.oauth-provider:hover {
+    border-color: var(--terminal-cyan);
+    background: var(--terminal-hover);
+}
+
+.provider-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.provider-icon {
+    font-size: 2rem;
+    width: 60px;
+    text-align: center;
+}
+
+.provider-details {
+    flex: 1;
+}
+
+.provider-name {
+    color: var(--terminal-cyan);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.provider-description {
+    color: var(--terminal-light-gray);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.benefit-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--terminal-surface-light);
+    border: 1px solid var(--terminal-border);
+    border-radius: 6px;
+}
+
+.benefit-item i {
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.benefit-content {
+    flex: 1;
+}
+
+.benefit-title {
+    color: var(--terminal-cyan);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.benefit-description {
+    color: var(--terminal-light-gray);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.guest-access {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.guest-actions {
+    margin-top: 1.5rem;
+}
+
+.security-notice {
+    margin: 1rem 0;
+}
+
+.security-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.security-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.security-item i {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.security-item span {
+    color: var(--terminal-light-gray);
+    font-size: 0.875rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .oauth-provider {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .provider-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .benefits-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .benefit-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .security-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+}
+</style>
+{% endblock %}

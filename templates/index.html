@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+{% block title %}YouTube Shorts Trimmer - Convert Videos to Vertical Shorts | Free Tool{% endblock %}
+{% block meta_title %}YouTube Shorts Trimmer | Free Viral Shorts Generator{% endblock %}
+{% block meta_description %}Instantly repurpose long-form YouTube videos into viral 9:16 short-form clips tailored for TikTok, Instagram Reels, and YouTube Shorts. Upload a link, choose clip length, and download platform-optimized content in minutes.{% endblock %}
+{% block og_description %}Repurpose YouTube videos into scroll-stopping vertical shorts with automatic cropping, clipping, and optional reaction overlays. Built for creators, agencies, and growth teams.{% endblock %}
+{% block twitter_description %}Turn any YouTube link into scroll-stopping vertical shorts ready for TikTok, Reels, and YouTube Shorts in minutes.{% endblock %}
+
+{% block content %}
+<!-- Terminal Command Header -->
+<div class="terminal-command-header">
+    <div class="command-line">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">./convert-youtube-to-shorts.sh --interactive</span>
+    </div>
+    <div class="command-output">
+        <span class="output-success">[INFO]</span> YouTube Shorts Converter v2.0 initialized
+    </div>
+</div>
+
+<!-- Hero Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./welcome.txt</span>
+    </div>
+    <div class="section-content">
+        <div class="ascii-art">
+███████╗██╗  ██╗ ██████╗ ██████╗ ████████╗███████╗
+██╔════╝██║  ██║██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝
+███████╗███████║██║   ██║██████╔╝   ██║   ███████╗
+╚════██║██╔══██║██║   ██║██╔══██╗   ██║   ╚════██║
+███████║██║  ██║╚██████╔╝██║  ██║   ██║   ███████║
+╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+        </div>
+        <div class="hero-text">
+            <h1 class="terminal-title">
+                Convert YouTube Videos to <span class="text-cyan">Viral Shorts</span>
+            </h1>
+            <p class="terminal-description">
+                Transform any YouTube video into perfect vertical shorts for TikTok, Instagram Reels, and YouTube Shorts.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Conversion Form -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">nano ./conversion-config.json</span>
+    </div>
+    <div class="section-content">
+        <form id="conversion-form" class="terminal-form">
+            <!-- YouTube URL Input -->
+            <div class="form-group">
+                <label class="terminal-label">
+                    <i class="fab fa-youtube text-red"></i> youtube_url:
+                </label>
+                <input 
+                    type="url" 
+                    class="terminal-input" 
+                    id="url" 
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    required>
+                <div class="input-help">// Enter any public YouTube video URL</div>
+            </div>
+
+            <!-- Settings Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="terminal-label">
+                        <i class="fas fa-layer-group text-yellow"></i> num_shorts:
+                    </label>
+                    <select class="terminal-select" id="num_shorts">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="terminal-label">
+                        <i class="fas fa-clock text-blue"></i> clip_duration:
+                    </label>
+                    <select class="terminal-select" id="clip_duration">
+                        <option value="10">10s</option>
+                        <option value="15" selected>15s</option>
+                        <option value="30">30s</option>
+                        <option value="60">60s</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Reaction Video Option -->
+            <div class="form-group">
+                <div class="terminal-checkbox">
+                    <input type="checkbox" id="add_reaction" class="checkbox-input">
+                    <label for="add_reaction" class="checkbox-label">
+                        <i class="fas fa-smile text-cyan"></i> add_reaction_overlay: true
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" id="reaction-url-group" style="display: none;">
+                <label class="terminal-label">
+                    <i class="fas fa-link text-yellow"></i> reaction_video_url:
+                </label>
+                <input 
+                    type="url" 
+                    class="terminal-input" 
+                    id="reaction_url" 
+                    placeholder="https://example.com/reaction.mp4">
+                <div class="input-help">// URL to a reaction video file (MP4 format)</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="submit" class="terminal-button terminal-button-primary">
+                    <i class="fas fa-play"></i> ./execute_conversion.sh
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Progress Section -->
+<div class="terminal-section" id="progress-section" style="display: none;">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">tail -f ./conversion.log</span>
+    </div>
+    <div class="section-content">
+        <div class="terminal-log">
+            <div class="log-line">
+                <span class="log-time">[2024-01-20 10:30:15]</span>
+                <span class="log-level log-info">[INFO]</span>
+                <span class="log-message">Starting YouTube video processing...</span>
+            </div>
+            <div class="log-line">
+                <span class="log-time">[2024-01-20 10:30:16]</span>
+                <span class="log-level log-info">[INFO]</span>
+                <span class="log-message" id="progress-text">Initializing...</span>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar" style="width: 0%;">
+                    <span class="progress-percentage">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Section -->
+<div class="terminal-section" id="results-section" style="display: none;">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">ls -la ./output/</span>
+    </div>
+    <div class="section-content">
+        <div class="success-message">
+            <i class="fas fa-check-circle text-green"></i>
+            <span class="success-text">Conversion completed successfully!</span>
+        </div>
+        <div id="download-links" class="file-list"></div>
+    </div>
+</div>
+
+<!-- Error Section -->
+<div class="terminal-section terminal-error" id="error-section" style="display: none;">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./error.log</span>
+    </div>
+    <div class="section-content">
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle text-red"></i>
+            <span class="error-text">Process failed with exit code 1</span>
+        </div>
+        <div class="error-details" id="error-message"></div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./features.md | head -n 20</span>
+    </div>
+    <div class="section-content">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt text-cyan"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">perfect_format</h3>
+                    <p class="feature-description">
+                        Automatically optimized for 9:16 vertical format, perfect for all mobile platforms.
+                    </p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt text-yellow"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">lightning_fast</h3>
+                    <p class="feature-description">
+                        Convert videos in minutes with our optimized processing engine.
+                    </p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-code text-blue"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">api_access</h3>
+                    <p class="feature-description">
+                        Automate your workflow with our powerful REST API integration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./workflow.sh</span>
+    </div>
+    <div class="section-content">
+        <div class="workflow-steps">
+            <div class="workflow-step">
+                <span class="step-number">01</span>
+                <div class="step-content">
+                    <h4 class="step-title">paste_youtube_url()</h4>
+                    <p class="step-description">Copy any YouTube video link and paste it into the converter.</p>
+                </div>
+            </div>
+            <div class="workflow-step">
+                <span class="step-number">02</span>
+                <div class="step-content">
+                    <h4 class="step-title">customize_settings()</h4>
+                    <p class="step-description">Choose number of shorts, duration, and optional features.</p>
+                </div>
+            </div>
+            <div class="workflow-step">
+                <span class="step-number">03</span>
+                <div class="step-content">
+                    <h4 class="step-title">ai_processing()</h4>
+                    <p class="step-description">Our system automatically converts and optimizes your content.</p>
+                </div>
+            </div>
+            <div class="workflow-step">
+                <span class="step-number">04</span>
+                <div class="step-content">
+                    <h4 class="step-title">download_and_share()</h4>
+                    <p class="step-description">Download your shorts and share across all platforms.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">echo "Ready to get started?"</span>
+    </div>
+    <div class="section-content">
+        <div class="cta-content">
+            <h3 class="cta-title">Ready to Create Viral Shorts?</h3>
+            <p class="cta-description">Join thousands of content creators using our platform</p>
+            <div class="cta-buttons">
+                <a href="/api-access" class="terminal-button terminal-button-primary">
+                    <i class="fas fa-key"></i> ./get-api-key.sh
+                </a>
+                <button onclick="document.getElementById('url').focus()" class="terminal-button terminal-button-secondary">
+                    <i class="fas fa-play"></i> ./try-free-tool.sh
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/terminal.js') }}"></script>
+{% endblock %}

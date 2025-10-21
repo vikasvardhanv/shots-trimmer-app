@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - YouTube Shorts Trimmer{% endblock %}
+{% block meta_title %}Profile | Manage Shorts Trimmer API Keys{% endblock %}
+{% block meta_description %}Review your Shorts Trimmer account details, copy API keys securely, and launch dashboards to track usage.{% endblock %}
+{% block og_description %}Manage your Shorts Trimmer profile, API credentials, and quick access actions in one secure dashboard.{% endblock %}
+{% block twitter_description %}View your account details and manage Shorts Trimmer API keys from one secure terminal-inspired dashboard.{% endblock %}
+
+{% block terminal_title %}User Profile{% endblock %}
+
+{% block content %}
+<!-- Profile Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./user-profile.json</span>
+    </div>
+    <div class="section-content">
+        <div class="profile-info">
+            <div class="profile-header">
+                {% if current_user.avatar_url %}
+                <img src="{{ current_user.avatar_url }}" alt="{{ current_user.name }}" class="profile-avatar">
+                {% else %}
+                <div class="profile-avatar-placeholder">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                {% endif %}
+                <div class="profile-details">
+                    <h2 class="profile-name">{{ current_user.name }}</h2>
+                    <p class="profile-email">{{ current_user.email }}</p>
+                    <p class="profile-meta">
+                        <span class="text-cyan">Provider:</span> {{ current_user.provider }}
+                        <span class="mx-3">|</span>
+                        <span class="text-cyan">Joined:</span> {{ current_user.created_at.strftime('%Y-%m-%d') if current_user.created_at else 'N/A' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- API Keys Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">ls -la ./api-keys/</span>
+    </div>
+    <div class="section-content">
+        <h3 class="terminal-subtitle">api_keys</h3>
+        {% if api_keys %}
+        <div class="api-keys-list">
+            {% for key in api_keys %}
+            <div class="api-key-item">
+                <div class="api-key-info">
+                    <h4 class="api-key-name">{{ key.name }}</h4>
+                    <p class="api-key-meta">
+                        <span class="text-cyan">Created:</span> {{ key.created_at.strftime('%Y-%m-%d %H:%M') if key.created_at else 'N/A' }}
+                        <span class="mx-3">|</span>
+                        <span class="text-cyan">Usage:</span> {{ key.usage_count }} requests
+                        {% if key.last_used %}
+                        <span class="mx-3">|</span>
+                        <span class="text-cyan">Last used:</span> {{ key.last_used.strftime('%Y-%m-%d %H:%M') }}
+                        {% endif %}
+                    </p>
+                    <div class="api-key-value">
+                        <code>{{ key.api_key }}</code>
+                        <button class="terminal-button-small" onclick="copyToClipboard('{{ key.api_key }}')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-key fa-3x text-cyan mb-3"></i>
+            <p class="text-muted">No API keys generated yet</p>
+            <a href="{{ url_for('api_access') }}" class="terminal-button terminal-button-primary">
+                <i class="fas fa-plus"></i> Generate API Key
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Account Actions -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">ls -la ./account-actions/</span>
+    </div>
+    <div class="section-content">
+        <div class="account-actions">
+            <a href="{{ url_for('api_access') }}" class="terminal-button terminal-button-primary">
+                <i class="fas fa-key"></i> Generate New API Key
+            </a>
+            <a href="{{ url_for('api_dashboard') }}" class="terminal-button terminal-button-secondary">
+                <i class="fas fa-chart-line"></i> View Dashboard
+            </a>
+            <a href="{{ url_for('logout') }}" class="terminal-button terminal-button-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('API key copied to clipboard!');
+    }, function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
+</script>
+
+<style>
+.profile-info {
+    margin: 1.5rem 0;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--terminal-surface-light);
+    border: 1px solid var(--terminal-border);
+    border-radius: 8px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--terminal-cyan);
+}
+
+.profile-avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--terminal-cyan);
+}
+
+.profile-details {
+    flex: 1;
+}
+
+.profile-name {
+    color: var(--terminal-cyan);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.profile-email {
+    color: var(--terminal-light-gray);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-meta {
+    color: var(--terminal-light-gray);
+    font-size: 0.875rem;
+}
+
+.api-keys-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.api-key-item {
+    padding: 1.5rem;
+    background: var(--terminal-surface-light);
+    border: 1px solid var(--terminal-border);
+    border-radius: 8px;
+}
+
+.api-key-name {
+    color: var(--terminal-cyan);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.api-key-meta {
+    color: var(--terminal-light-gray);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.api-key-value {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--terminal-border);
+    border-radius: 4px;
+}
+
+.api-key-value code {
+    flex: 1;
+    color: var(--terminal-cyan);
+    font-size: 0.875rem;
+    word-break: break-all;
+}
+
+.terminal-button-small {
+    background: transparent;
+    border: 1px solid var(--terminal-cyan);
+    color: var(--terminal-cyan);
+    padding: 0.25rem 0.75rem;
+    font-family: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.terminal-button-small:hover {
+    background: var(--terminal-cyan);
+    color: var(--terminal-bg);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.account-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+}
+
+.terminal-button-danger {
+    background: transparent;
+    border: 1px solid var(--terminal-red);
+    color: var(--terminal-red);
+}
+
+.terminal-button-danger:hover {
+    background: var(--terminal-red);
+    color: var(--terminal-bg);
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .api-key-value {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .account-actions {
+        flex-direction: column;
+    }
+    
+    .account-actions .terminal-button {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

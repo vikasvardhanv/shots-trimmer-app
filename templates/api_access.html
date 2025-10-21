@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %}API Access - Get Your Free API Key | YouTube Shorts Trimmer{% endblock %}
+{% block meta_title %}Shots Trimmer API Access | Generate Secure Video Automation Keys{% endblock %}
+{% block meta_description %}Request a secure API key to automate YouTube-to-shorts workflows directly inside your app, n8n, Zapier, or custom backend.{% endblock %}
+{% block og_description %}Generate a Shorts Trimmer API key to trigger conversions, track usage, and integrate vertical video creation into any workflow.{% endblock %}
+{% block twitter_description %}Instantly generate a secure API key and automate short-form video creation from YouTube links.{% endblock %}
+
+{% block terminal_title %}API Key Generator{% endblock %}
+
+{% block content %}
+<!-- Terminal Command Header -->
+<div class="terminal-command-header">
+    <div class="command-line">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">./generate-api-key.sh --interactive</span>
+    </div>
+    <div class="command-output">
+        <span class="output-success">[INFO]</span> API Key Generator v2.0 initialized
+    </div>
+</div>
+
+<!-- Hero Section -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./api-info.txt</span>
+    </div>
+    <div class="section-content">
+        <div class="hero-text">
+            <h1 class="terminal-title">
+                Get Your <span class="text-cyan">Free API Key</span>
+            </h1>
+            <p class="terminal-description">
+                Automate your video conversion workflow with our powerful REST API
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- API Key Generation Form -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">nano ./user-registration.json</span>
+    </div>
+    <div class="section-content">
+        <form id="api-key-form" class="terminal-form">
+            <div class="form-group">
+                <label class="terminal-label">
+                    <i class="fas fa-user text-blue"></i> full_name:
+                </label>
+                <input 
+                    type="text" 
+                    class="terminal-input" 
+                    id="name" 
+                    placeholder="Enter your full name"
+                    required>
+                <div class="input-help">// Required for API key generation</div>
+            </div>
+
+            <div class="form-group">
+                <label class="terminal-label">
+                    <i class="fas fa-envelope text-yellow"></i> email_address:
+                </label>
+                <input 
+                    type="email" 
+                    class="terminal-input" 
+                    id="email" 
+                    placeholder="your.email@example.com"
+                    required>
+                <div class="input-help">// We'll never share your email with anyone</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="terminal-button terminal-button-primary w-100">
+                    <i class="fas fa-key"></i> ./generate-api-key.sh
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- API Key Result Section -->
+<div class="terminal-section" id="api-key-result" style="display: none;">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./generated-api-key.txt</span>
+    </div>
+    <div class="section-content">
+        <div class="success-message">
+            <i class="fas fa-check-circle text-green"></i>
+            <span class="success-text">API key generated successfully!</span>
+        </div>
+        <div class="api-key-display">
+            <label class="terminal-label">
+                <i class="fas fa-key text-cyan"></i> api_key:
+            </label>
+            <div class="key-container">
+                <input type="text" class="terminal-input-readonly" id="generated-api-key" readonly>
+                <button class="copy-button" type="button" onclick="copyApiKey()">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <div class="input-help">// Save this key securely. You'll need it for API requests.</div>
+        </div>
+        <div class="terminal-actions">
+            <a href="/api-dashboard" class="terminal-button terminal-button-secondary">
+                <i class="fas fa-chart-line"></i> ./view-dashboard.sh
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- API Documentation -->
+<div class="terminal-section" id="api-docs">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./quick-start.md</span>
+    </div>
+    <div class="section-content">
+        <h3 class="terminal-subtitle">quick_start_guide</h3>
+        <p class="terminal-description">Use your API key in the request header:</p>
+        
+        <div class="code-block">
+            <div class="code-header">
+                <span class="code-title">example-curl-request.sh</span>
+                <button class="copy-code-btn" onclick="copyCode()">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <pre class="code-content"><code>curl -X POST https://your-domain.com/api/v1/convert \
+  -H "X-API-Key: your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://youtube.com/watch?v=...",
+    "num_shorts": 3,
+    "clip_duration": 15
+  }'</code></pre>
+        </div>
+        
+        <div class="terminal-actions">
+            <a href="{{ url_for('api_dashboard') }}#example-code" class="terminal-button terminal-button-secondary">
+                <i class="fas fa-file-alt"></i> ./view-docs.sh
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- API Features -->
+<div class="terminal-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">cat ./api-features.txt</span>
+    </div>
+    <div class="section-content">
+        <h3 class="terminal-subtitle">api_features</h3>
+        <div class="feature-list">
+            <div class="feature-item">
+                <i class="fas fa-check text-cyan"></i>
+                <span>Convert YouTube videos programmatically</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check text-cyan"></i>
+                <span>Track job status and progress</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check text-cyan"></i>
+                <span>Download videos or get base64 encoded data</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check text-cyan"></i>
+                <span>Perfect for n8n, Zapier, and custom workflows</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check text-cyan"></i>
+                <span>RESTful API with JSON responses</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('api-key-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const button = e.target.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
+    
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ./generating-key.sh';
+    
+    try {
+        const response = await fetch('/generate-api-key', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('generated-api-key').value = data.api_key;
+            document.getElementById('api-key-result').style.display = 'block';
+            e.target.reset();
+        } else {
+            showTerminalError('Error: ' + (data.error || 'Failed to generate API key'));
+        }
+    } catch (error) {
+        showTerminalError('Error: ' + error.message);
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+});
+
+function copyApiKey() {
+    const input = document.getElementById('generated-api-key');
+    input.select();
+    document.execCommand('copy');
+    
+    const button = event.target.closest('button');
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+        button.innerHTML = originalHTML;
+    }, 2000);
+}
+
+function copyCode() {
+    const codeContent = document.querySelector('.code-content code').textContent;
+    navigator.clipboard.writeText(codeContent);
+    
+    const button = event.target.closest('button');
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+        button.innerHTML = originalHTML;
+    }, 2000);
+}
+
+function showTerminalError(message) {
+    // Create a simple terminal-style alert
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'terminal-alert terminal-error';
+    alertDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle text-red"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+</script>
+{% endblock %}

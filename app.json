@@ -1,0 +1,30 @@
+{
+  "name": "YouTube Shorts Trimmer",
+  "description": "Convert YouTube videos into short vertical clips",
+  "keywords": ["python", "flask", "youtube", "video", "shorts"],
+  "website": "https://github.com/your-username/shots-trimmer-app",
+  "repository": "https://github.com/your-username/shots-trimmer-app",
+  "env": {
+    "SECRET_KEY": {
+      "description": "A secret key for Flask sessions",
+      "generator": "secret"
+    },
+    "FLASK_ENV": {
+      "description": "Flask environment",
+      "value": "production"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "image": "heroku/python",
+  "stack": "heroku-22",
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}

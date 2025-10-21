@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+
+{% block title %}API Dashboard - Track Your Usage | YouTube Shorts Trimmer{% endblock %}
+{% block meta_title %}Shots Trimmer API Dashboard | Monitor Conversion Usage{% endblock %}
+{% block meta_description %}Authenticate with your Shorts Trimmer API key to view request volume, monitor rate limits, and quickly copy integration snippets.{% endblock %}
+{% block og_description %}Access detailed API usage analytics, last-run timestamps, and quick integration examples for the Shorts Trimmer platform.{% endblock %}
+{% block twitter_description %}Log in with your API key to view usage analytics and copy ready-made curl requests.{% endblock %}
+
+{% block terminal_title %}API Dashboard{% endblock %}
+
+{% block content %}
+<!-- Terminal Command Header -->
+<div class="terminal-command-header">
+    <div class="command-line">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">./api-dashboard.sh --authenticate</span>
+    </div>
+    <div class="command-output">
+        <span class="output-success">[INFO]</span> API Dashboard v2.0 initialized
+    </div>
+</div>
+
+<!-- Login Section -->
+<div class="terminal-section" id="login-section">
+    <div class="section-header">
+        <span class="terminal-prompt">root@shots-trimmer:~$</span>
+        <span class="command-text">./authenticate-api-key.sh</span>
+    </div>
+    <div class="section-content">
+        <div class="hero-text">
+            <h1 class="terminal-title">
+                <i class="fas fa-chart-line text-cyan"></i> API Dashboard
+            </h1>
+            <p class="terminal-description">
+                Enter your API key to view usage statistics and manage your account
+            </p>
+        </div>
+        
+        <form id="login-form" class="terminal-form">
+            <div class="form-group">
+                <label class="terminal-label">
+                    <i class="fas fa-key text-yellow"></i> api_key:
+                </label>
+                <input 
+                    type="text" 
+                    class="terminal-input" 
+                    id="api-key-input" 
+                    placeholder="st_..."
+                    required>
+                <div class="input-help">// Enter your API key to view usage statistics</div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="terminal-button terminal-button-primary">
+                    <i class="fas fa-sign-in-alt"></i> ./view-dashboard.sh
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Dashboard Content -->
+<div id="dashboard-content" style="display: none;">
+    <!-- User Info -->
+    <div class="terminal-section">
+        <div class="section-header">
+            <span class="terminal-prompt">root@shots-trimmer:~$</span>
+            <span class="command-text">whoami && cat ./user-profile.json</span>
+        </div>
+        <div class="section-content">
+            <div class="user-info">
+                <div class="user-details">
+                    <h3 class="user-name" id="user-name">Loading...</h3>
+                    <p class="user-email" id="user-email"></p>
+                </div>
+                <div class="user-actions">
+                    <button class="terminal-button terminal-button-secondary" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> ./logout.sh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="terminal-section">
+        <div class="section-header">
+            <span class="terminal-prompt">root@shots-trimmer:~$</span>
+            <span class="command-text">cat ./usage-stats.json | jq '.'</span>
+        </div>
+        <div class="section-content">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-hashtag text-cyan"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="usage-count">0</h3>
+                        <p class="stat-label">total_requests</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt text-yellow"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h6 class="stat-value" id="created-date">-</h6>
+                        <p class="stat-label">member_since</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock text-blue"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h6 class="stat-value" id="last-used">-</h6>
+                        <p class="stat-label">last_used</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Key Display -->
+    <div class="terminal-section">
+        <div class="section-header">
+            <span class="terminal-prompt">root@shots-trimmer:~$</span>
+            <span class="command-text">cat ~/.config/api-key</span>
+        </div>
+        <div class="section-content">
+            <h3 class="terminal-subtitle">your_api_key</h3>
+            <div class="api-key-display">
+                <div class="key-container">
+                    <input type="text" class="terminal-input-readonly" id="current-api-key" readonly>
+                    <button class="copy-button" type="button" onclick="copyCurrentApiKey()">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="input-help">
+                    <i class="fas fa-info-circle"></i>
+                    Keep this key secure and never share it publicly
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Example -->
+    <div class="terminal-section">
+        <div class="section-header">
+            <span class="terminal-prompt">root@shots-trimmer:~$</span>
+            <span class="command-text">cat ./example-request.sh</span>
+        </div>
+        <div class="section-content">
+            <h3 class="terminal-subtitle">quick_example</h3>
+            <p class="terminal-description">Use this code to convert a YouTube video:</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">example-request.sh</span>
+                    <button class="copy-code-btn" onclick="copyExampleCode()">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <pre class="code-content"><code id="example-code">// Loading...</code></pre>
+            </div>
+            
+            <div class="terminal-actions">
+                <a href="#example-code" class="terminal-button terminal-button-secondary">
+                    <i class="fas fa-book"></i> ./view-full-docs.sh
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentApiKey = null;
+
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const apiKey = document.getElementById('api-key-input').value.trim();
+    const button = e.target.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
+    
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ./authenticating.sh';
+    
+    try {
+        const response = await fetch('/api-key-info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ api_key: apiKey })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            currentApiKey = apiKey;
+            displayDashboard(data);
+        } else {
+            showTerminalError('Error: ' + (data.error || 'Invalid API key'));
+        }
+    } catch (error) {
+        showTerminalError('Error: ' + error.message);
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+});
+
+function displayDashboard(data) {
+    // Hide login, show dashboard
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
+    
+    // Fill in user data
+    document.getElementById('user-name').textContent = data.name;
+    document.getElementById('user-email').textContent = data.email;
+    document.getElementById('usage-count').textContent = data.usage_count || 0;
+    
+    // Format dates
+    const createdDate = new Date(data.created_at * 1000).toLocaleDateString();
+    document.getElementById('created-date').textContent = createdDate;
+    
+    const lastUsed = data.last_used 
+        ? new Date(data.last_used * 1000).toLocaleDateString()
+        : 'Never';
+    document.getElementById('last-used').textContent = lastUsed;
+    
+    // Display API key
+    document.getElementById('current-api-key').value = currentApiKey;
+    
+    // Update example code
+    const exampleCode = `curl -X POST https://your-domain.com/api/v1/convert \\
+  -H "X-API-Key: ${currentApiKey}" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "url": "https://youtube.com/watch?v=dQw4w9WgXcQ",
+    "num_shorts": 3,
+    "clip_duration": 15
+  }'`;
+    
+    document.getElementById('example-code').textContent = exampleCode;
+}
+
+function logout() {
+    currentApiKey = null;
+    document.getElementById('login-section').style.display = 'block';
+    document.getElementById('dashboard-content').style.display = 'none';
+    document.getElementById('api-key-input').value = '';
+}
+
+function copyCurrentApiKey() {
+    const input = document.getElementById('current-api-key');
+    input.select();
+    document.execCommand('copy');
+    
+    const button = event.target.closest('button');
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+        button.innerHTML = originalHTML;
+    }, 2000);
+}
+
+function copyExampleCode() {
+    const codeContent = document.getElementById('example-code').textContent;
+    navigator.clipboard.writeText(codeContent);
+    
+    const button = event.target.closest('button');
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+        button.innerHTML = originalHTML;
+    }, 2000);
+}
+
+function showTerminalError(message) {
+    // Create a simple terminal-style alert
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'terminal-alert terminal-error';
+    alertDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle text-red"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+</script>
+{% endblock %}
