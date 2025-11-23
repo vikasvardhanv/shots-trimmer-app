@@ -1,0 +1,38 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore local environment and secrets
+.env
+*.env
+
+# Ignore local folders not needed in deployment
+instance/
+logs/
+uploads/
+downloads/
+
+# Ignore OS and editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Ignore test and dev files
+*.log
+*.sqlite3
+*.db
+
+# Ignore other unnecessary files
+*.bak
+*.swp
+*.tmp
+
+# Ignore git
+.git/
+.gitignore
+
+# Ignore deployment docs
+DEPLOYMENT.md
+README.md

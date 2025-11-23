@@ -68,12 +68,24 @@ app.config.update(
     JSONIFY_PRETTYPRINT_REGULAR=False,
 )
 
-is_production = os.environ.get('FLASK_ENV', '').lower() == 'production'
+render_external_url = os.environ.get('RENDER_EXTERNAL_URL', '').strip()
+render_env_flag = os.environ.get('RENDER', '').strip().lower()
+is_production_env = os.environ.get('FLASK_ENV', '').lower()
+is_production = (
+    is_production_env == 'production'
+    or bool(render_external_url)
+    or render_env_flag in ('true', '1', 'yes')
+)
+
+preferred_url_scheme = os.environ.get('PREFERRED_URL_SCHEME')
+if not preferred_url_scheme:
+    preferred_url_scheme = 'https' if is_production else 'http'
+
 app.config.setdefault('SESSION_COOKIE_HTTPONLY', True)
 app.config.setdefault('SESSION_COOKIE_SAMESITE', 'Lax')
 app.config.setdefault('REMEMBER_COOKIE_HTTPONLY', True)
 app.config.setdefault('SESSION_COOKIE_SECURE', is_production)
-app.config.setdefault('PREFERRED_URL_SCHEME', 'https' if is_production else 'http')
+app.config.setdefault('PREFERRED_URL_SCHEME', preferred_url_scheme)
 
 if not app.config['API_KEY']:
     logger.warning("No ADMIN API_KEY configured; relying on user-generated keys only.")
@@ -836,12 +848,18 @@ def sitemap_xml():
     )
     return Response(sitemap, mimetype='application/xml')
 
+
 # Routes
 @app.route('/')
 def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
     return render_template('index.html')
+
+# Online tools page (123apps.com links)
+@app.route('/online-tools')
+def online_tools():
+    return render_template('online_tools.html')
 
 @app.route('/api-access')
 def api_access():
