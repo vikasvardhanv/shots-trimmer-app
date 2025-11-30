@@ -1,11 +1,3 @@
-# Terms of Service page
-@app.route('/terms')
-def terms():
-    return render_template('terms.html')
-# Privacy Policy page
-@app.route('/privacy')
-def privacy():
-    return render_template('privacy.html')
 import base64
 import logging
 import os
@@ -872,6 +864,15 @@ def online_tools():
 @app.route('/api-access')
 def api_access():
     return render_template('api_access.html')
+
+# Terms and Privacy pages
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
 
 # Add template context processor
 @app.context_processor
